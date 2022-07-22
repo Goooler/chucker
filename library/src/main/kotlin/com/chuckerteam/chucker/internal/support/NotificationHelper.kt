@@ -1,19 +1,19 @@
 package com.chuckerteam.chucker.internal.support
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.LongSparseArray
+import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.api.Chucker
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
 import com.chuckerteam.chucker.internal.ui.BaseChuckerActivity
-import java.util.HashSet
 
 internal class NotificationHelper(val context: Context) {
 
@@ -48,14 +48,11 @@ internal class NotificationHelper(val context: Context) {
     }
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val transactionsChannel = NotificationChannel(
-                TRANSACTIONS_CHANNEL_ID,
-                context.getString(R.string.chucker_network_notification_category),
-                NotificationManager.IMPORTANCE_LOW
-            )
-            notificationManager.createNotificationChannels(listOf(transactionsChannel))
-        }
+        val transactionsChannel = NotificationChannelCompat
+            .Builder(TRANSACTIONS_CHANNEL_ID, NotificationManager.IMPORTANCE_LOW)
+            .setName(context.getString(R.string.chucker_network_notification_category))
+            .build()
+        NotificationManagerCompat.from(context).createNotificationChannel(transactionsChannel)
     }
 
     private fun addToBuffer(transaction: HttpTransaction) {
