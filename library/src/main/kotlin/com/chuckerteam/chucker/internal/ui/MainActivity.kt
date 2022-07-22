@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
@@ -59,12 +58,11 @@ internal class MainActivity :
         }
 
         viewModel.transactions.observe(
-            this,
-            { transactionTuples ->
-                transactionsAdapter.submitList(transactionTuples)
-                mainBinding.tutorialGroup.isVisible = transactionTuples.isEmpty()
-            }
-        )
+            this
+        ) { transactionTuples ->
+            transactionsAdapter.submitList(transactionTuples)
+            mainBinding.tutorialGroup.isVisible = transactionTuples.isEmpty()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -139,7 +137,7 @@ internal class MainActivity :
         val applicationContext = this.applicationContext
         lifecycleScope.launch {
             val transactions = viewModel.getAllTransactions()
-            if (transactions.isNullOrEmpty()) {
+            if (transactions.isEmpty()) {
                 showToast(applicationContext.getString(R.string.chucker_export_empty_text))
                 return@launch
             }

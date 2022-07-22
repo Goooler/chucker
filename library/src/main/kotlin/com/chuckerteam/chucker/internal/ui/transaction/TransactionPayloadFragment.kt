@@ -41,7 +41,7 @@ internal class TransactionPayloadFragment :
         arguments?.getSerializable(ARG_TYPE) as PayloadType
     }
 
-    private val saveToFile = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+    private val saveToFile = registerForActivityResult(ActivityResultContracts.CreateDocument("*/*")) { uri ->
         val transaction = viewModel.transaction.value
         val applicationContext = requireContext().applicationContext
         if (uri != null && transaction != null) {
@@ -161,9 +161,8 @@ internal class TransactionPayloadFragment :
 
         if (payloadType == PayloadType.REQUEST) {
             viewModel.doesRequestBodyRequireEncoding.observe(
-                viewLifecycleOwner,
-                { menu.findItem(R.id.encode_url).isVisible = it }
-            )
+                viewLifecycleOwner
+            ) { menu.findItem(R.id.encode_url).isVisible = it }
         } else {
             menu.findItem(R.id.encode_url).isVisible = false
         }

@@ -9,6 +9,6 @@ internal class PostDataTest {
     fun `post data is created correctly with mime type`() {
         val postData = HarTestUtils.createPostData("POST")
 
-        assertThat(postData?.mimeType).isEqualTo("application/json")
+        assertThat(postData.mimeType).isEqualTo("application/json")
     }
 }

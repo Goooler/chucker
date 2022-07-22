@@ -54,7 +54,7 @@ internal class TransactionBodyAdapter : RecyclerView.Adapter<TransactionPayloadV
         }
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items.size
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {

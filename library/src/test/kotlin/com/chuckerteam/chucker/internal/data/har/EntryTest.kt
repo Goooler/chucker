@@ -17,7 +17,7 @@ internal class EntryTest {
         val transaction = HarTestUtils.createTransaction("GET")
         val entry = HarTestUtils.createEntry("GET")
 
-        assertThat(Entry.DateFormat.get()!!.parse(entry!!.startedDateTime))
+        assertThat(Entry.DateFormat.get()!!.parse(entry.startedDateTime))
             .isEqualTo(Date(transaction.requestDate!!))
     }
 
@@ -25,14 +25,14 @@ internal class EntryTest {
     fun `entry is created correctly with time`() {
         val entry = HarTestUtils.createEntry("GET")
 
-        assertThat(entry?.time).isEqualTo(1000)
+        assertThat(entry.time).isEqualTo(1000)
     }
 
     @Test
     fun `entry is created correctly with request`() {
         val entry = HarTestUtils.createEntry("POST")
 
-        assertThat(entry?.request).isEqualTo(
+        assertThat(entry.request).isEqualTo(
             Request(
                 method = "POST",
                 url = "http://localhost:80/getUsers",
@@ -52,7 +52,7 @@ internal class EntryTest {
     fun `entry is created correctly with response`() {
         val entry = HarTestUtils.createEntry("GET")
 
-        assertThat(entry?.response).isEqualTo(
+        assertThat(entry.response).isEqualTo(
             Response(
                 status = 200,
                 statusText = "OK",
@@ -79,6 +79,6 @@ internal class EntryTest {
         val transaction = HarTestUtils.createTransaction("GET")
         val entry = HarTestUtils.createEntry("GET")
 
-        assertThat(entry?.timings).isEqualTo(Timings(transaction))
+        assertThat(entry.timings).isEqualTo(Timings(transaction))
     }
 }

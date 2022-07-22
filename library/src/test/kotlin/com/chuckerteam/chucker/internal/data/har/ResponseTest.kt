@@ -10,28 +10,28 @@ internal class ResponseTest {
     fun `response is created correctly with status`() {
         val response = HarTestUtils.createResponse("GET")
 
-        assertThat(response?.status).isEqualTo(200)
+        assertThat(response.status).isEqualTo(200)
     }
 
     @Test
     fun `response is created correctly with status text`() {
         val response = HarTestUtils.createResponse("GET")
 
-        assertThat(response?.statusText).isEqualTo("OK")
+        assertThat(response.statusText).isEqualTo("OK")
     }
 
     @Test
     fun `response is created correctly with http version`() {
         val response = HarTestUtils.createResponse("GET")
 
-        assertThat(response?.httpVersion).isEqualTo("HTTP")
+        assertThat(response.httpVersion).isEqualTo("HTTP")
     }
 
     @Test
     fun `response is created correctly with content`() {
         val response = HarTestUtils.createResponse("GET")
 
-        assertThat(response?.content).isEqualTo(
+        assertThat(response.content).isEqualTo(
             Content(
                 size = 1000,
                 compression = null,
@@ -46,6 +46,6 @@ internal class ResponseTest {
     fun `response is created correctly with body size`() {
         val response = HarTestUtils.createResponse("GET")
 
-        assertThat(response?.bodySize).isEqualTo(1000)
+        assertThat(response.bodySize).isEqualTo(1000)
     }
 }

@@ -137,7 +137,7 @@ You can redact headers that contain sensitive information by calling `redactHead
 
 
 ```kotlin
-interceptor.redactHeader("Auth-Token", "User-Session");
+interceptor.redactHeader("Auth-Token", "User-Session")
 ```
 
 ### Decode-Body 📖

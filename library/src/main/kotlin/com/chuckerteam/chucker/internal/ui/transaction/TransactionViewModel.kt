@@ -11,7 +11,7 @@ import com.chuckerteam.chucker.internal.support.combineLatest
 
 internal class TransactionViewModel(transactionId: Long) : ViewModel() {
 
-    private val mutableEncodeUrl = MutableLiveData<Boolean>(false)
+    private val mutableEncodeUrl = MutableLiveData(false)
 
     val encodeUrl: LiveData<Boolean> = mutableEncodeUrl
 

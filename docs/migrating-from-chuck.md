@@ -36,7 +36,7 @@ Please note that Chucker is distributed on **JitPack** at the moment so you need
 You need to update the initialization code of Chuck from this:
 
 ```kotlin
-import com.readystatesoftware.chuck.ChuckInterceptor;
+import com.readystatesoftware.chuck.ChuckInterceptor
 
 val client = OkHttpClient.Builder()
   .addInterceptor(new ChuckInterceptor(context))
@@ -45,7 +45,7 @@ val client = OkHttpClient.Builder()
 
 to this:
 
-```java 
+```java
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 
 val client = OkHttpClient.Builder()

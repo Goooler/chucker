@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.databinding.ChuckerFragmentTransactionOverviewBinding
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
@@ -29,7 +28,7 @@ internal class TransactionOverviewFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         overviewBinding = ChuckerFragmentTransactionOverviewBinding.inflate(inflater, container, false)
         return overviewBinding.root
     }
@@ -37,9 +36,8 @@ internal class TransactionOverviewFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.save_body).isVisible = false
         viewModel.doesUrlRequireEncoding.observe(
-            viewLifecycleOwner,
-            Observer { menu.findItem(R.id.encode_url).isVisible = it }
-        )
+            viewLifecycleOwner
+        ) { menu.findItem(R.id.encode_url).isVisible = it }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -48,9 +46,8 @@ internal class TransactionOverviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.transaction.combineLatest(viewModel.encodeUrl).observe(
-            viewLifecycleOwner,
-            Observer { (transaction, encodeUrl) -> populateUI(transaction, encodeUrl) }
-        )
+            viewLifecycleOwner
+        ) { (transaction, encodeUrl) -> populateUI(transaction, encodeUrl) }
     }
 
     private fun populateUI(transaction: HttpTransaction?, encodeUrl: Boolean) {
