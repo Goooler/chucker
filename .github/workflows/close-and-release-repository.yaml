@@ -9,6 +9,9 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
 
+    - name: Cache Gradle Folders
+      uses: gradle/gradle-build-action@v2
+
     - name: Close and Release Staging Repository
       run: ./gradlew closeAndReleaseStagingRepository
       env:

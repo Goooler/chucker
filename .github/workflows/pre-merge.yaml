@@ -1,10 +1,10 @@
 name: Pre Merge Checks
-on: 
+on:
   push:
     branches:
       - develop
   pull_request:
-    branches: 
+    branches:
       - '*'
   workflow_dispatch:
     branches:
@@ -25,15 +25,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Cache Gradle Folders
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches/
-          ~/.gradle/wrapper/
-        key: cache-gradle-${{ matrix.kotlin-version }}-${{ hashFiles('build.gradle') }}
-        restore-keys: |
-          cache-gradle-${{ matrix.version }}-
-          cache-gradle-
+      uses: gradle/gradle-build-action@v2
 
     - name: Run all the tests
       run: ./gradlew test
@@ -49,13 +41,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Cache Gradle Folders
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches/
-          ~/.gradle/wrapper/
-        key: cache-gradle-${{ hashFiles('build.gradle') }}
-        restore-keys: cache-gradle-
+      uses: gradle/gradle-build-action@v2
 
     - name: Run detekt
       run: ./gradlew detekt
@@ -71,13 +57,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache Gradle Folders
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ hashFiles('build.gradle') }}
-          restore-keys: cache-gradle-
+        uses: gradle/gradle-build-action@v2
 
       - name: Run lint
         run: ./gradlew lint
@@ -93,14 +73,8 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Cache Gradle Folders
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches/
-          ~/.gradle/wrapper/
-        key: cache-gradle-${{ hashFiles('build.gradle') }}
-        restore-keys: cache-gradle-
- 
+      uses: gradle/gradle-build-action@v2
+
     - name: Run ktlint
       run: ./gradlew ktlintCheck
 
@@ -115,13 +89,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Cache Gradle Folders
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-          key: cache-gradle-${{ hashFiles('build.gradle') }}
-          restore-keys: cache-gradle-
+        uses: gradle/gradle-build-action@v2
 
       - name: Run apiCheck
         run: ./gradlew apiCheck
@@ -137,14 +105,8 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Cache Gradle Folders
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches/
-          ~/.gradle/wrapper/
-        key: cache-gradle-${{ hashFiles('build.gradle') }}
-        restore-keys: cache-gradle-
-          
+      uses: gradle/gradle-build-action@v2
+
     - name: Publish to Maven Local
       run: ./gradlew publishToMavenLocal
       env:

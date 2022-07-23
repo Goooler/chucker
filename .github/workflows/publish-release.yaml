@@ -1,5 +1,5 @@
 name: Publish Release
-on: 
+on:
   push:
     tags:
       - '*'
@@ -12,6 +12,9 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v3
+
+    - name: Cache Gradle Folders
+      uses: gradle/gradle-build-action@v2
 
     - name: Publish to Maven Local
       run: ./gradlew publishToMavenLocal
