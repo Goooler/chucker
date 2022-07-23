@@ -8,7 +8,10 @@ import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.Logger
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Class responsible of holding the logic for the retention of your HTTP transactions.
@@ -34,9 +37,9 @@ public class RetentionManager @JvmOverloads constructor(
 
     init {
         cleanupFrequency = if (retentionPeriod == Period.ONE_HOUR) {
-            TimeUnit.MINUTES.toMillis(30)
+            30.minutes.inWholeMilliseconds
         } else {
-            TimeUnit.HOURS.toMillis(2)
+            2.hours.inWholeMilliseconds
         }
     }
 
@@ -75,14 +78,12 @@ public class RetentionManager @JvmOverloads constructor(
 
     private fun getThreshold(now: Long) = if (period == 0L) now else now - period
 
-    private fun toMillis(period: Period): Long {
-        return when (period) {
-            Period.ONE_HOUR -> TimeUnit.HOURS.toMillis(1)
-            Period.ONE_DAY -> TimeUnit.DAYS.toMillis(1)
-            Period.ONE_WEEK -> TimeUnit.DAYS.toMillis(7)
-            Period.FOREVER -> 0
-        }
-    }
+    private fun toMillis(period: Period): Long = when (period) {
+        Period.ONE_HOUR -> 1.hours
+        Period.ONE_DAY -> 1.days
+        Period.ONE_WEEK -> 7.days
+        Period.FOREVER -> Duration.ZERO
+    }.inWholeMilliseconds
 
     public enum class Period {
         /** Retain data for the last hour. */
